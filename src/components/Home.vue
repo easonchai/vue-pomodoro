@@ -100,25 +100,25 @@ import ProgressBar from "progressbar.js";
 export default {
   name: "Home",
   mounted: function() {
-    var topRight = new ProgressBar.Path("#top-right", {
+    this.topRight = new ProgressBar.Path("#top-right", {
       easing: "easeOut",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     topRight.set(1);
 
-    var bottomRight = new ProgressBar.Path("#bottom-right", {
+    this.bottomRight = new ProgressBar.Path("#bottom-right", {
       easing: "easeOut",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     bottomRight.set(1);
 
-    var bottomLeft = new ProgressBar.Path("#bottom-left", {
+    this.bottomLeft = new ProgressBar.Path("#bottom-left", {
       easing: "easeOut",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     bottomLeft.set(1);
 
-    var topLeft = new ProgressBar.Path("#top-left", {
+    this.topLeft = new ProgressBar.Path("#top-left", {
       easing: "easeOut",
       duration: this.pomodoroDuration * 60 * 1000,
     });
