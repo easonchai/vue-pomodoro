@@ -22,8 +22,10 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Lobster", cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #f85959;
+  background: #fff8ee;
 }
 </style>
