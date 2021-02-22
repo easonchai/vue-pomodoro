@@ -90,7 +90,7 @@
       </svg>
       <h2>25:00</h2>
     </div>
-    <button @click="startTimer">{{ buttonText }}</button>
+    <button @click="handleTimer">{{ buttonText }}</button>
   </div>
 </template>
 
@@ -130,14 +130,28 @@ export default {
       restDuration: 5,
       currentSegment: 1,
       buttonText: "Start!",
+      topRight: null,
+      bottomRight: null,
+      bottomLeft: null,
+      topLeft: null,
     };
   },
   methods: {
-    startTimer() {
-      this.buttonText = "Pause";
+    handleTimer() {
+      if (this.buttonText === "Start!" || this.buttonText === "Resume") {
+        this.buttonText = "Pause";
+      } else if (this.buttonText === "Pause") {
+        this.buttonText = "Resume";
+      } else {
+        this.buttonText = "Start!";
+      }
+      this.animateBar();
     },
-    pauseTimer() {
-      this.buttonText = "Resume";
+    animateBar() {
+      switch (this.currentSegment) {
+        case 1:
+          this;
+      }
     },
   },
 };
