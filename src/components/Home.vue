@@ -90,6 +90,7 @@
       </svg>
       <h2>25:00</h2>
     </div>
+    <button>Start!</button>
   </div>
 </template>
 
@@ -165,5 +166,24 @@ h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+button {
+  margin-top: 90px;
+  width: 200px;
+  height: 68px;
+  background: #f85959;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+
+  font-size: 36px;
+  line-height: 45px;
+  text-align: center;
+  color: #fff8ee;
+}
+
+button:focus {
+  outline: none;
 }
 </style>
