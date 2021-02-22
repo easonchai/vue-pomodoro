@@ -95,10 +95,11 @@
 </template>
 
 <script>
+import ProgressBar from "progressbar.js";
+
 export default {
   name: "Home",
   mounted: function() {
-    var ProgressBar = require("progressbar.js");
     var bar = new ProgressBar.Path("#top-right", {
       easing: "easeOut",
       duration: 2400,
@@ -106,6 +107,12 @@ export default {
 
     bar.set(1);
     bar.animate(0);
+  },
+  data: () => {
+    return {
+      pomodoroDuration: 25,
+      restDuration: 5,
+    };
   },
 };
 </script>
