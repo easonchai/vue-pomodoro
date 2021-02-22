@@ -88,6 +88,7 @@
           d="M160.17,0A172,172,0,0,0,0,161.51"
         />
       </svg>
+      <h2>25:00</h2>
     </div>
   </div>
 </template>
@@ -137,19 +138,32 @@ h1 {
   top: 0px;
   right: 0px;
 }
+
 #second-segment {
   position: absolute;
   bottom: 0px;
   right: 0px;
 }
+
 #third-segment {
   position: absolute;
   bottom: 0px;
   left: 0px;
 }
+
 #fourth-segment {
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+h2 {
+  position: absolute;
+  font-size: 64px;
+  color: #f85959;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 </style>
