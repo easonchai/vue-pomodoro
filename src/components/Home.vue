@@ -4,7 +4,13 @@
       <h1>Pomodoro &#127813;</h1>
     </div>
     <div class="timer">
-      <svg width="163" height="165" viewBox="-8 -8 184 188" fill="none">
+      <svg
+        width="163"
+        height="165"
+        viewBox="-8 -8 184 188"
+        fill="none"
+        id="first-segment"
+      >
         <path
           stroke="#E9D2B1"
           stroke-width="15"
@@ -17,6 +23,69 @@
           stroke-width="15"
           stroke-linecap="round"
           d="M165.16,163.38A172,172,0,0,0,0,0"
+        />
+      </svg>
+      <svg
+        width="163"
+        height="165"
+        viewBox="-8 -8 184 188"
+        fill="none"
+        id="second-segment"
+      >
+        <path
+          stroke="#E9D2B1"
+          stroke-width="15"
+          stroke-linecap="round"
+          d="M0,163.34A172,172,0,0,0,164.44,0"
+        />
+        <path
+          id="bottom-right"
+          stroke="#F85959"
+          stroke-width="15"
+          stroke-linecap="round"
+          d="M0,163.34A172,172,0,0,0,164.44,0"
+        />
+      </svg>
+      <svg
+        width="163"
+        height="165"
+        viewBox="-8 -8 184 188"
+        fill="none"
+        id="third-segment"
+      >
+        <path
+          stroke="#E9D2B1"
+          stroke-width="15"
+          stroke-linecap="round"
+          d="M0,0A172,172,0,0,0,165.16,162.61"
+        />
+        <path
+          id="bottom-left"
+          stroke="#F85959"
+          stroke-width="15"
+          stroke-linecap="round"
+          d="M0,0A172,172,0,0,0,165.16,162.61"
+        />
+      </svg>
+      <svg
+        width="163"
+        height="165"
+        viewBox="-8 -8 184 188"
+        fill="none"
+        id="fourth-segment"
+      >
+        <path
+          stroke="#E9D2B1"
+          stroke-width="15"
+          stroke-linecap="round"
+          d="M160.17,0A172,172,0,0,0,0,161.51"
+        />
+        <path
+          id="top-left"
+          stroke="#F85959"
+          stroke-width="15"
+          stroke-linecap="round"
+          d="M160.17,0A172,172,0,0,0,0,161.51"
         />
       </svg>
     </div>
@@ -43,8 +112,8 @@ export default {
 .container {
   height: 100vh;
   display: flex;
-  justify-content: center;
-  position: relative;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
@@ -58,5 +127,29 @@ h1 {
 
 .timer {
   margin-top: 150px;
+  width: 330px;
+  height: 330px;
+  position: relative;
+}
+
+#first-segment {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+#second-segment {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+#third-segment {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+#fourth-segment {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 </style>
