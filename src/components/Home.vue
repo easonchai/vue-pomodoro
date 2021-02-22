@@ -101,7 +101,6 @@ export default {
   name: "Home",
   data: () => {
     return {
-      pomodoroDuration: 1,
       restDuration: 5,
       currentSegment: 1,
       buttonText: "Start!",
@@ -109,31 +108,23 @@ export default {
       bottomRight: null,
       bottomLeft: null,
       topLeft: null,
+      pathOptions: {
+        easing: "linear",
+        duration: 25 * 60 * 1000,
+      },
     };
   },
   mounted: function() {
-    this.topRight = new ProgressBar.Path("#top-right", {
-      easing: "linear",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
+    this.topRight = new ProgressBar.Path("#top-right", this.pathOptions);
     this.topRight.set(1);
 
-    this.bottomRight = new ProgressBar.Path("#bottom-right", {
-      easing: "linear",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
+    this.bottomRight = new ProgressBar.Path("#bottom-right", this.pathOptions);
     this.bottomRight.set(1);
 
-    this.bottomLeft = new ProgressBar.Path("#bottom-left", {
-      easing: "linear",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
+    this.bottomLeft = new ProgressBar.Path("#bottom-left", this.pathOptions);
     this.bottomLeft.set(1);
 
-    this.topLeft = new ProgressBar.Path("#top-left", {
-      easing: "linear",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
+    this.topLeft = new ProgressBar.Path("#top-left", this.pathOptions);
     this.topLeft.set(1);
   },
   methods: {
@@ -151,10 +142,25 @@ export default {
       switch (this.currentSegment) {
         case 1:
           this.topRight.animate(0, this.onFinish);
+          break;
+        case 2:
+          this.bottomRight.animate(0, this.onFinish);
+          break;
+        case 3:
+          this.bottomLeft.animate(0, this.onFinish);
+          break;
+        case 4:
+          this.topLeft.animate(0, this.onFinish);
+          break;
       }
     },
     onFinish() {
       console.log("Finish");
+      if (this.currentSegment < 4) {
+        this.currentSegment += 1;
+      } else {
+        this.currentSegment = 1;
+      }
     },
   },
 };
