@@ -90,7 +90,7 @@
       </svg>
       <h2>25:00</h2>
     </div>
-    <button>Start!</button>
+    <button @click="startTimer">{{ buttonText }}</button>
   </div>
 </template>
 
@@ -129,7 +129,16 @@ export default {
       pomodoroDuration: 25,
       restDuration: 5,
       currentSegment: 1,
+      buttonText: "Start!",
     };
+  },
+  methods: {
+    startTimer() {
+      this.buttonText = "Pause";
+    },
+    pauseTimer() {
+      this.buttonText = "Resume";
+    },
   },
 };
 </script>
