@@ -88,7 +88,7 @@
           d="M160.17,0A172,172,0,0,0,0,161.51"
         />
       </svg>
-      <h2>25:00</h2>
+      <h2>{{ timeDisplay }}</h2>
     </div>
     <button @click="handleTimer">{{ buttonText }}</button>
   </div>
@@ -100,7 +100,10 @@ import ProgressBar from "progressbar.js";
 export default {
   name: "Home",
   data: () => {
+    const pomodoroDuration = 1 * 60 * 1000; // 25 mins to millisecs
+
     return {
+      currentTimeInSeconds: pomodoroDuration / 1000,
       restDuration: 5,
       currentSegment: 1,
       buttonText: "Start!",
@@ -110,8 +113,9 @@ export default {
       topLeft: null,
       pathOptions: {
         easing: "linear",
-        duration: 25 * 60 * 1000,
+        duration: pomodoroDuration,
       },
+      timeout: null,
     };
   },
   mounted: function() {
@@ -139,6 +143,9 @@ export default {
       this.animateBar();
     },
     animateBar() {
+      this.timeout = setInterval(() => {
+        this.currentTimeInSeconds -= 1;
+      }, 1000);
       switch (this.currentSegment) {
         case 1:
           this.topRight.animate(0, this.onFinish);
@@ -161,6 +168,16 @@ export default {
       } else {
         this.currentSegment = 1;
       }
+    },
+  },
+  computed: {
+    timeDisplay() {
+      const minutes = String(parseInt(this.currentTimeInSeconds / 60));
+      const seconds = String(this.currentTimeInSeconds % 60);
+      const paddedMinutes = ("0" + minutes).slice(-2);
+      const paddedSeconds = ("0" + seconds).slice(-2);
+
+      return `${paddedMinutes}:${paddedSeconds}`;
     },
   },
 };
