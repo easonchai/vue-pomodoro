@@ -97,6 +97,16 @@
 <script>
 import ProgressBar from "progressbar.js";
 
+//TODO:
+// Add pause function
+// Add on finish function
+// Add sound
+// Change timeout to interval
+// Rest
+// Next segment
+// Restart all
+// Confetti on finish all?
+
 export default {
   name: "Home",
   data: () => {
