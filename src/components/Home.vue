@@ -101,7 +101,7 @@ export default {
   name: "Home",
   data: () => {
     return {
-      pomodoroDuration: 25,
+      pomodoroDuration: 1,
       restDuration: 5,
       currentSegment: 1,
       buttonText: "Start!",
@@ -113,25 +113,25 @@ export default {
   },
   mounted: function() {
     this.topRight = new ProgressBar.Path("#top-right", {
-      easing: "easeOut",
+      easing: "linear",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     this.topRight.set(1);
 
     this.bottomRight = new ProgressBar.Path("#bottom-right", {
-      easing: "easeOut",
+      easing: "linear",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     this.bottomRight.set(1);
 
     this.bottomLeft = new ProgressBar.Path("#bottom-left", {
-      easing: "easeOut",
+      easing: "linear",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     this.bottomLeft.set(1);
 
     this.topLeft = new ProgressBar.Path("#top-left", {
-      easing: "easeOut",
+      easing: "linear",
       duration: this.pomodoroDuration * 60 * 1000,
     });
     this.topLeft.set(1);
