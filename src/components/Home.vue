@@ -99,31 +99,6 @@ import ProgressBar from "progressbar.js";
 
 export default {
   name: "Home",
-  mounted: function() {
-    this.topRight = new ProgressBar.Path("#top-right", {
-      easing: "easeOut",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
-    topRight.set(1);
-
-    this.bottomRight = new ProgressBar.Path("#bottom-right", {
-      easing: "easeOut",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
-    bottomRight.set(1);
-
-    this.bottomLeft = new ProgressBar.Path("#bottom-left", {
-      easing: "easeOut",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
-    bottomLeft.set(1);
-
-    this.topLeft = new ProgressBar.Path("#top-left", {
-      easing: "easeOut",
-      duration: this.pomodoroDuration * 60 * 1000,
-    });
-    topLeft.set(1);
-  },
   data: () => {
     return {
       pomodoroDuration: 25,
@@ -135,6 +110,31 @@ export default {
       bottomLeft: null,
       topLeft: null,
     };
+  },
+  mounted: function() {
+    this.topRight = new ProgressBar.Path("#top-right", {
+      easing: "easeOut",
+      duration: this.pomodoroDuration * 60 * 1000,
+    });
+    this.topRight.set(1);
+
+    this.bottomRight = new ProgressBar.Path("#bottom-right", {
+      easing: "easeOut",
+      duration: this.pomodoroDuration * 60 * 1000,
+    });
+    this.bottomRight.set(1);
+
+    this.bottomLeft = new ProgressBar.Path("#bottom-left", {
+      easing: "easeOut",
+      duration: this.pomodoroDuration * 60 * 1000,
+    });
+    this.bottomLeft.set(1);
+
+    this.topLeft = new ProgressBar.Path("#top-left", {
+      easing: "easeOut",
+      duration: this.pomodoroDuration * 60 * 1000,
+    });
+    this.topLeft.set(1);
   },
   methods: {
     handleTimer() {
@@ -150,8 +150,11 @@ export default {
     animateBar() {
       switch (this.currentSegment) {
         case 1:
-          this;
+          this.topRight.animate(0, this.onFinish);
       }
+    },
+    onFinish() {
+      console.log("Finish");
     },
   },
 };
