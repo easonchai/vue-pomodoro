@@ -101,7 +101,6 @@ import ProgressBar from "progressbar.js";
 // Add on finish function
 // Add sound
 // Rest
-// Next segment
 // Restart all
 // Confetti on finish all?
 
@@ -113,7 +112,7 @@ export default {
     return {
       pomodoroDuration: pomodoroDuration,
       currentTimeInSeconds: pomodoroDuration,
-      restDuration: 5,
+      restDuration: 5 * 60,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
