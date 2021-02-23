@@ -101,7 +101,6 @@ import ProgressBar from "progressbar.js";
 // Add pause function
 // Add on finish function
 // Add sound
-// Change timeout to interval
 // Rest
 // Next segment
 // Restart all
@@ -125,7 +124,7 @@ export default {
         easing: "linear",
         duration: pomodoroDuration,
       },
-      timeout: null,
+      interval: null,
     };
   },
   mounted: function() {
@@ -144,17 +143,20 @@ export default {
   methods: {
     handleTimer() {
       if (this.buttonText === "Start!" || this.buttonText === "Resume") {
+        this.animateBar();
         this.buttonText = "Pause";
       } else if (this.buttonText === "Pause") {
+        this.pauseBar();
         this.buttonText = "Resume";
       } else {
         this.buttonText = "Start!";
       }
-      this.animateBar();
     },
     animateBar() {
-      this.timeout = setInterval(() => {
-        this.currentTimeInSeconds -= 1;
+      this.interval = setInterval(() => {
+        if (this.currentTimeInSeconds > 0) {
+          this.currentTimeInSeconds -= 1;
+        }
       }, 1000);
       switch (this.currentSegment) {
         case 1:
@@ -170,6 +172,9 @@ export default {
           this.topLeft.animate(0, this.onFinish);
           break;
       }
+    },
+    pauseBar() {
+      clearInterval(this.interval);
     },
     onFinish() {
       console.log("Finish");
