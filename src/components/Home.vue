@@ -103,7 +103,6 @@ import beep from "../assets/beep.mp3";
 
 //TODO:
 // Add on finish function
-// Rest
 // Next segment
 // Restart all
 // Confetti on finish all?
@@ -116,7 +115,7 @@ export default {
     return {
       pomodoroDuration,
       currentTimeInSeconds: pomodoroDuration,
-      restDuration: 5 * 60,
+      restDuration: 0.1 * 60,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
@@ -234,7 +233,9 @@ export default {
       // Set new interval
       this.reduceTime();
       setTimeout(() => {
+        clearInterval(this.interval);
         this.beepAudio.play();
+        this.currentTimeInSeconds = this.pomodoroDuration;
         this.buttonText = "Start";
         this.resting = false;
       }, this.restDuration * 1000);
