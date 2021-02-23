@@ -102,19 +102,15 @@ import ProgressBar from "progressbar.js";
 import beep from "../assets/beep.mp3";
 import confetti from "canvas-confetti";
 
-//TODO:
-// Restart all
-// Confetti
-
 export default {
   name: "Home",
   data: () => {
-    const pomodoroDuration = 25 * 60; // 25 mins to secs
+    const pomodoroDuration = 0.1 * 60; // 25 mins to secs
 
     return {
       pomodoroDuration,
+      restDuration: 0.1 * 60,
       currentTimeInSeconds: pomodoroDuration,
-      restDuration: 5 * 60,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
@@ -151,8 +147,6 @@ export default {
       } else if (this.buttonText === "Pause") {
         this.pauseBar();
         this.buttonText = "Resume";
-      } else {
-        this.buttonText = "Start!";
       }
     },
     animateBar() {
@@ -225,9 +219,10 @@ export default {
 
         // Immediately disable button and set state
         this.resting = true;
+        this.buttonText = "Rest";
 
         setTimeout(() => {
-          this.buttonText = "Rest";
+          // Change time to reflect rest duration
           this.currentTimeInSeconds = this.restDuration;
 
           // Start rest after beep ends

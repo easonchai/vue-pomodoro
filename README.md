@@ -38,4 +38,4 @@ Proper on finish handling & sound & button disabled
 
 #### Part 3
 
-Add rest auto countdown & text & test finish & maybe add confetti? & restart all
+Add rest auto countdown & text & test finish & confetti & restart all
