@@ -161,44 +161,28 @@ export default {
           this.currentTimeInSeconds -= 1;
         }
       }, 1000);
+      let segment = null;
       switch (this.currentSegment) {
         case 1:
-          this.topRight.animate(
-            0,
-            {
-              duration: this.currentTimeInSeconds * 1000,
-            },
-            this.onFinish
-          );
+          segment = this.topRight;
           break;
         case 2:
-          this.bottomRight.animate(
-            0,
-            {
-              duration: this.currentTimeInSeconds * 1000,
-            },
-            this.onFinish
-          );
+          segment = this.bottomRight;
           break;
         case 3:
-          this.bottomLeft.animate(
-            0,
-            {
-              duration: this.currentTimeInSeconds * 1000,
-            },
-            this.onFinish
-          );
+          segment = this.bottomLeft;
           break;
         case 4:
-          this.topLeft.animate(
-            0,
-            {
-              duration: this.currentTimeInSeconds * 1000,
-            },
-            this.onFinish
-          );
+          segment = this.topLeft;
           break;
       }
+      segment.animate(
+        0,
+        {
+          duration: this.currentTimeInSeconds * 1000,
+        },
+        this.onFinish
+      );
     },
     pauseBar() {
       clearInterval(this.interval);
