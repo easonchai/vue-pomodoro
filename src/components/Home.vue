@@ -88,9 +88,12 @@
           d="M160.17,0A172,172,0,0,0,0,161.51"
         />
       </svg>
-      <h2>{{ timeDisplay }}</h2>
+      <div class="time-display">
+        <p>Rest</p>
+        <h2>{{ timeDisplay }}</h2>
+      </div>
     </div>
-    <button @click="handleTimer">{{ buttonText }}</button>
+    <button @click="handleTimer" :disabled="resting">{{ buttonText }}</button>
   </div>
 </template>
 
@@ -215,8 +218,10 @@ export default {
         this.beepAudio.play();
 
         setTimeout(() => {
-          this.buttonText = "Start!";
+          this.buttonText = "Rest";
           this.currentTimeInSeconds = this.restDuration;
+          // Start pause thing
+          this.resting = true;
         }, 4500);
       }
     },
@@ -283,13 +288,26 @@ h1 {
   left: 0px;
 }
 
-h2 {
+.time-display {
   position: absolute;
-  font-size: 64px;
-  color: #f85959;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+p {
+  font-size: 48px;
+  line-height: 60px;
+  text-align: center;
+  color: #ff8080;
+}
+
+h2 {
+  font-size: 64px;
+  color: #f85959;
   text-align: center;
 }
 
@@ -310,5 +328,10 @@ button {
 
 button:focus {
   outline: none;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 </style>
