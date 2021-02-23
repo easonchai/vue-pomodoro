@@ -201,11 +201,6 @@ export default {
       if (this.currentTimeInSeconds <= 0) {
         // When finish, we want it to beep for a few seconds then only start rest timer
         if (this.currentSegment < 4) {
-          confetti({
-            particleCount: 300,
-            spread: 100,
-            origin: { y: 0.7 },
-          });
           this.currentSegment += 1;
         } else {
           // Reset all
@@ -213,6 +208,12 @@ export default {
           this.topLeft.set(1);
           this.bottomRight.set(1);
           this.bottomLeft.set(1);
+
+          confetti({
+            particleCount: 300,
+            spread: 100,
+            origin: { y: 0.7 },
+          });
 
           this.currentSegment = 1;
         }
