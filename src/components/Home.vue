@@ -105,11 +105,11 @@ import confetti from "canvas-confetti";
 export default {
   name: "Home",
   data: () => {
-    const pomodoroDuration = 0.1 * 60; // 25 mins to secs
+    const pomodoroDuration = 25 * 60; // 25 mins to secs
 
     return {
       pomodoroDuration,
-      restDuration: 0.1 * 60,
+      restDuration: 5 * 60,
       currentTimeInSeconds: pomodoroDuration,
       currentSegment: 1,
       buttonText: "Start!",
