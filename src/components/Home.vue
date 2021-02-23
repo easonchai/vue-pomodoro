@@ -111,6 +111,7 @@ export default {
     const pomodoroDuration = 0.2 * 60; // 25 mins to secs
 
     return {
+      pomodoroDuration: pomodoroDuration,
       currentTimeInSeconds: pomodoroDuration,
       restDuration: 5,
       currentSegment: 1,
@@ -197,7 +198,9 @@ export default {
         } else {
           this.currentSegment = 1;
         }
+        clearInterval(this.interval);
         this.buttonText = "Start!";
+        this.currentTimeInSeconds = this.pomodoroDuration;
       }
     },
   },
