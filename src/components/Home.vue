@@ -88,23 +88,29 @@
           d="M160.17,0A172,172,0,0,0,0,161.51"
         />
       </svg>
-      <h2>{{ timeDisplay }}</h2>
+      <div class="time-display">
+        <p v-if="resting">Rest</p>
+        <h2>{{ timeDisplay }}</h2>
+      </div>
     </div>
-    <button @click="handleTimer">{{ buttonText }}</button>
+    <button @click="handleTimer" :disabled="resting">{{ buttonText }}</button>
   </div>
 </template>
 
 <script>
 import ProgressBar from "progressbar.js";
+import beep from "../assets/beep.mp3";
+import confetti from "canvas-confetti";
 
 export default {
   name: "Home",
   data: () => {
-    const pomodoroDuration = 1 * 60 * 1000; // 25 mins to millisecs
+    const pomodoroDuration = 25 * 60; // 25 mins to secs
 
     return {
-      currentTimeInSeconds: pomodoroDuration / 1000,
-      restDuration: 5,
+      pomodoroDuration,
+      restDuration: 5 * 60,
+      currentTimeInSeconds: pomodoroDuration,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
@@ -113,9 +119,11 @@ export default {
       topLeft: null,
       pathOptions: {
         easing: "linear",
-        duration: pomodoroDuration,
+        duration: (pomodoroDuration + 1) * 1000, // add a sec and convert to millis
       },
-      timeout: null,
+      interval: null,
+      beepAudio: new Audio(beep),
+      resting: false,
     };
   },
   mounted: function() {
@@ -134,40 +142,111 @@ export default {
   methods: {
     handleTimer() {
       if (this.buttonText === "Start!" || this.buttonText === "Resume") {
+        this.animateBar();
         this.buttonText = "Pause";
       } else if (this.buttonText === "Pause") {
+        this.pauseBar();
         this.buttonText = "Resume";
-      } else {
-        this.buttonText = "Start!";
       }
-      this.animateBar();
     },
     animateBar() {
-      this.timeout = setInterval(() => {
-        this.currentTimeInSeconds -= 1;
-      }, 1000);
+      this.reduceTime();
+      let segment = null;
       switch (this.currentSegment) {
         case 1:
-          this.topRight.animate(0, this.onFinish);
+          segment = this.topRight;
           break;
         case 2:
-          this.bottomRight.animate(0, this.onFinish);
+          segment = this.bottomRight;
           break;
         case 3:
-          this.bottomLeft.animate(0, this.onFinish);
+          segment = this.bottomLeft;
           break;
         case 4:
-          this.topLeft.animate(0, this.onFinish);
+          segment = this.topLeft;
+          break;
+      }
+      segment.animate(
+        0,
+        {
+          duration: (this.currentTimeInSeconds + 1) * 1000,
+        },
+        this.onFinish
+      );
+    },
+    pauseBar() {
+      clearInterval(this.interval);
+      switch (this.currentSegment) {
+        case 1:
+          this.topRight.stop();
+          break;
+        case 2:
+          this.bottomRight.stop();
+          break;
+        case 3:
+          this.bottomLeft.stop();
+          break;
+        case 4:
+          this.topLeft.stop();
           break;
       }
     },
     onFinish() {
-      console.log("Finish");
-      if (this.currentSegment < 4) {
-        this.currentSegment += 1;
-      } else {
-        this.currentSegment = 1;
+      if (this.currentTimeInSeconds <= 0) {
+        // When finish, we want it to beep for a few seconds then only start rest timer
+        if (this.currentSegment < 4) {
+          this.currentSegment += 1;
+        } else {
+          // Reset all
+          this.topRight.set(1);
+          this.topLeft.set(1);
+          this.bottomRight.set(1);
+          this.bottomLeft.set(1);
+
+          confetti({
+            particleCount: 300,
+            spread: 100,
+            origin: { y: 0.7 },
+          });
+
+          this.currentSegment = 1;
+        }
+        // Clear interval
+        clearInterval(this.interval);
+
+        // Play audio
+        this.beepAudio.play();
+
+        // Immediately disable button and set state
+        this.resting = true;
+        this.buttonText = "Rest";
+
+        setTimeout(() => {
+          // Change time to reflect rest duration
+          this.currentTimeInSeconds = this.restDuration;
+
+          // Start rest after beep ends
+          this.startRest();
+        }, 4200);
       }
+    },
+    reduceTime() {
+      this.interval = setInterval(() => {
+        if (this.currentTimeInSeconds > 0) {
+          this.currentTimeInSeconds -= 1;
+        }
+      }, 1000);
+    },
+    startRest() {
+      // Set new interval
+      this.reduceTime();
+      setTimeout(() => {
+        clearInterval(this.interval);
+        this.beepAudio.play();
+        this.currentTimeInSeconds = this.pomodoroDuration;
+        this.buttonText = "Start!";
+        this.resting = false;
+      }, this.restDuration * 1000);
     },
   },
   computed: {
@@ -231,13 +310,27 @@ h1 {
   left: 0px;
 }
 
-h2 {
+.time-display {
   position: absolute;
-  font-size: 64px;
-  color: #f85959;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+p {
+  font-size: 48px;
+  line-height: 48px;
+  text-align: center;
+  color: #ff8080;
+}
+
+h2 {
+  font-size: 64px;
+  color: #f85959;
   text-align: center;
 }
 
@@ -258,5 +351,14 @@ button {
 
 button:focus {
   outline: none;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+canvas {
+  background: none;
 }
 </style>
