@@ -127,7 +127,6 @@ export default {
       },
       interval: null,
       beepAudio: new Audio(beep),
-      beepTimer: null,
     };
   },
   mounted: function() {
@@ -215,10 +214,10 @@ export default {
         // Play audio
         this.beepAudio.play();
 
-        this.beepTimer = setTimeout(() => {
+        setTimeout(() => {
           this.buttonText = "Start!";
           this.currentTimeInSeconds = this.restDuration;
-        }, 5000);
+        }, 4500);
       }
     },
   },
