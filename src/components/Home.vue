@@ -89,7 +89,7 @@
         />
       </svg>
       <div class="time-display">
-        <p>Rest</p>
+        <p v-if="resting">Rest</p>
         <h2>{{ timeDisplay }}</h2>
       </div>
     </div>
@@ -294,13 +294,14 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
 p {
   font-size: 48px;
-  line-height: 60px;
+  line-height: 48px;
   text-align: center;
   color: #ff8080;
 }
