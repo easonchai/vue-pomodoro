@@ -100,7 +100,7 @@ import beep from "../assets/beep.mp3";
 
 //TODO:
 // Add on finish function
-// Add sound
+// Fix pause issue
 // Rest
 // Next segment
 // Restart all
@@ -163,16 +163,40 @@ export default {
       }, 1000);
       switch (this.currentSegment) {
         case 1:
-          this.topRight.animate(0, this.onFinish);
+          this.topRight.animate(
+            0,
+            {
+              duration: this.currentTimeInSeconds * 1000,
+            },
+            this.onFinish
+          );
           break;
         case 2:
-          this.bottomRight.animate(0, this.onFinish);
+          this.bottomRight.animate(
+            0,
+            {
+              duration: this.currentTimeInSeconds * 1000,
+            },
+            this.onFinish
+          );
           break;
         case 3:
-          this.bottomLeft.animate(0, this.onFinish);
+          this.bottomLeft.animate(
+            0,
+            {
+              duration: this.currentTimeInSeconds * 1000,
+            },
+            this.onFinish
+          );
           break;
         case 4:
-          this.topLeft.animate(0, this.onFinish);
+          this.topLeft.animate(
+            0,
+            {
+              duration: this.currentTimeInSeconds * 1000,
+            },
+            this.onFinish
+          );
           break;
       }
     },

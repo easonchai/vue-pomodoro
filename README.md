@@ -34,4 +34,8 @@ Basic setup and timer & animation
 
 #### Part 2
 
-Proper on finish handling & sound
+Proper on finish handling & sound & button disabled
+
+#### Part 3
+
+Add rest auto countdown & text & test finish & maybe add confetti? & restart all
