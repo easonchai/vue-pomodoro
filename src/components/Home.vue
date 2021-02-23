@@ -100,7 +100,6 @@ import beep from "../assets/beep.mp3";
 
 //TODO:
 // Add on finish function
-// Fix pause issue
 // Rest
 // Next segment
 // Restart all
@@ -127,6 +126,7 @@ export default {
       },
       interval: null,
       beepAudio: new Audio(beep),
+      resting: false,
     };
   },
   mounted: function() {
@@ -220,6 +220,7 @@ export default {
         }, 4500);
       }
     },
+    startRest() {},
   },
   computed: {
     timeDisplay() {
