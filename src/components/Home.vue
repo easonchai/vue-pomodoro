@@ -100,17 +100,16 @@
 <script>
 import ProgressBar from "progressbar.js";
 import beep from "../assets/beep.mp3";
+import confetti from "canvas-confetti";
 
 //TODO:
-// Add on finish function
-// Next segment
 // Restart all
-// Confetti on finish all?
+// Confetti
 
 export default {
   name: "Home",
   data: () => {
-    const pomodoroDuration = 0.2 * 60; // 25 mins to secs
+    const pomodoroDuration = 0.1 * 60; // 25 mins to secs
 
     return {
       pomodoroDuration,
@@ -202,8 +201,19 @@ export default {
       if (this.currentTimeInSeconds <= 0) {
         // When finish, we want it to beep for a few seconds then only start rest timer
         if (this.currentSegment < 4) {
+          confetti({
+            particleCount: 300,
+            spread: 100,
+            origin: { y: 0.7 },
+          });
           this.currentSegment += 1;
         } else {
+          // Reset all
+          this.topRight.set(1);
+          this.topLeft.set(1);
+          this.bottomRight.set(1);
+          this.bottomLeft.set(1);
+
           this.currentSegment = 1;
         }
         // Clear interval
@@ -348,5 +358,9 @@ button:focus {
 button:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+canvas {
+  background: none;
 }
 </style>
