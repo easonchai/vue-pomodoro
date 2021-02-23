@@ -191,11 +191,12 @@ export default {
       }
     },
     onFinish() {
-      console.log("Finish");
-      if (this.currentSegment < 4) {
-        this.currentSegment += 1;
-      } else {
-        this.currentSegment = 1;
+      if (this.currentTimeInSeconds <= 0) {
+        if (this.currentSegment < 4) {
+          this.currentSegment += 1;
+        } else {
+          this.currentSegment = 1;
+        }
       }
     },
   },
