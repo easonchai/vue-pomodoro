@@ -98,7 +98,6 @@
 import ProgressBar from "progressbar.js";
 
 //TODO:
-// Add pause function
 // Add on finish function
 // Add sound
 // Rest
@@ -109,10 +108,10 @@ import ProgressBar from "progressbar.js";
 export default {
   name: "Home",
   data: () => {
-    const pomodoroDuration = 1 * 60 * 1000; // 25 mins to millisecs
+    const pomodoroDuration = 0.2 * 60; // 25 mins to secs
 
     return {
-      currentTimeInSeconds: pomodoroDuration / 1000,
+      currentTimeInSeconds: pomodoroDuration,
       restDuration: 5,
       currentSegment: 1,
       buttonText: "Start!",
@@ -122,7 +121,7 @@ export default {
       topLeft: null,
       pathOptions: {
         easing: "linear",
-        duration: pomodoroDuration,
+        duration: (pomodoroDuration + 0.2) * 1000, // add a fraction of a sec and convert to millis
       },
       interval: null,
     };
@@ -192,11 +191,13 @@ export default {
     },
     onFinish() {
       if (this.currentTimeInSeconds <= 0) {
+        console.log("Finished");
         if (this.currentSegment < 4) {
           this.currentSegment += 1;
         } else {
           this.currentSegment = 1;
         }
+        this.buttonText = "Start!";
       }
     },
   },
