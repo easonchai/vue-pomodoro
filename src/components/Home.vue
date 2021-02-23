@@ -175,6 +175,20 @@ export default {
     },
     pauseBar() {
       clearInterval(this.interval);
+      switch (this.currentSegment) {
+        case 1:
+          this.topRight.stop();
+          break;
+        case 2:
+          this.bottomRight.stop();
+          break;
+        case 3:
+          this.bottomLeft.stop();
+          break;
+        case 4:
+          this.topLeft.stop();
+          break;
+      }
     },
     onFinish() {
       console.log("Finish");
