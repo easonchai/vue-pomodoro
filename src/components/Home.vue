@@ -125,7 +125,7 @@ export default {
       topLeft: null,
       pathOptions: {
         easing: "linear",
-        duration: (pomodoroDuration + 0.2) * 1000, // add a fraction of a sec and convert to millis
+        duration: (pomodoroDuration + 1) * 1000, // add a sec and convert to millis
       },
       interval: null,
       beepAudio: new Audio(beep),
@@ -181,7 +181,7 @@ export default {
       segment.animate(
         0,
         {
-          duration: this.currentTimeInSeconds * 1000,
+          duration: (this.currentTimeInSeconds + 1) * 1000,
         },
         this.onFinish
       );
@@ -222,7 +222,7 @@ export default {
           this.currentTimeInSeconds = this.restDuration;
           // Start pause thing
           this.resting = true;
-        }, 4500);
+        }, 4200);
       }
     },
     startRest() {},
