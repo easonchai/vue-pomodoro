@@ -109,12 +109,12 @@ import confetti from "canvas-confetti";
 export default {
   name: "Home",
   data: () => {
-    const pomodoroDuration = 0.1 * 60; // 25 mins to secs
+    const pomodoroDuration = 25 * 60; // 25 mins to secs
 
     return {
       pomodoroDuration,
       currentTimeInSeconds: pomodoroDuration,
-      restDuration: 0.1 * 60,
+      restDuration: 5 * 60,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
@@ -223,12 +223,14 @@ export default {
         // Play audio
         this.beepAudio.play();
 
+        // Immediately disable button and set state
+        this.resting = true;
+
         setTimeout(() => {
           this.buttonText = "Rest";
           this.currentTimeInSeconds = this.restDuration;
 
-          // Set state
-          this.resting = true;
+          // Start rest after beep ends
           this.startRest();
         }, 4200);
       }
