@@ -236,7 +236,7 @@ export default {
         clearInterval(this.interval);
         this.beepAudio.play();
         this.currentTimeInSeconds = this.pomodoroDuration;
-        this.buttonText = "Start";
+        this.buttonText = "Start!";
         this.resting = false;
       }, this.restDuration * 1000);
     },
