@@ -158,11 +158,7 @@ export default {
       }
     },
     animateBar() {
-      this.interval = setInterval(() => {
-        if (this.currentTimeInSeconds > 0) {
-          this.currentTimeInSeconds -= 1;
-        }
-      }, 1000);
+      this.reduceTime();
       let segment = null;
       switch (this.currentSegment) {
         case 1:
@@ -220,12 +216,29 @@ export default {
         setTimeout(() => {
           this.buttonText = "Rest";
           this.currentTimeInSeconds = this.restDuration;
-          // Start pause thing
+
+          // Set state
           this.resting = true;
+          this.startRest();
         }, 4200);
       }
     },
-    startRest() {},
+    reduceTime() {
+      this.interval = setInterval(() => {
+        if (this.currentTimeInSeconds > 0) {
+          this.currentTimeInSeconds -= 1;
+        }
+      }, 1000);
+    },
+    startRest() {
+      // Set new interval
+      this.reduceTime();
+      setTimeout(() => {
+        this.beepAudio.play();
+        this.buttonText = "Start";
+        this.resting = false;
+      }, this.restDuration * 1000);
+    },
   },
   computed: {
     timeDisplay() {
