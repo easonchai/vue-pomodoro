@@ -96,11 +96,13 @@
 
 <script>
 import ProgressBar from "progressbar.js";
+import beep from "../assets/beep.mp3";
 
 //TODO:
 // Add on finish function
 // Add sound
 // Rest
+// Next segment
 // Restart all
 // Confetti on finish all?
 
@@ -124,6 +126,8 @@ export default {
         duration: (pomodoroDuration + 0.2) * 1000, // add a fraction of a sec and convert to millis
       },
       interval: null,
+      beepAudio: new Audio(beep),
+      beepTimer: null,
     };
   },
   mounted: function() {
@@ -191,15 +195,22 @@ export default {
     },
     onFinish() {
       if (this.currentTimeInSeconds <= 0) {
-        console.log("Finished");
+        // When finish, we want it to beep for a few seconds then only start rest timer
         if (this.currentSegment < 4) {
           this.currentSegment += 1;
         } else {
           this.currentSegment = 1;
         }
+        // Clear interval
         clearInterval(this.interval);
-        this.buttonText = "Start!";
-        this.currentTimeInSeconds = this.pomodoroDuration;
+
+        // Play audio
+        this.beepAudio.play();
+
+        this.beepTimer = setTimeout(() => {
+          this.buttonText = "Start!";
+          this.currentTimeInSeconds = this.restDuration;
+        }, 5000);
       }
     },
   },
