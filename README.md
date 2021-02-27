@@ -1,27 +1,21 @@
 # vue-pomodoro
 
-Pomodoro Timer built using Vue 2.
+🍅 Pomodoro Timer built using Vue 2. ✌️
 
-## Project setup
+## Project setup 🏗️
 
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development 🚧
 
 ```
 yarn serve
 ```
 
-#### Part 1
+## Part 3 🎉
 
-Basic setup and timer & animation
+In Part 3, we will develop the 'rest countdown' feature with additional styling improvements.
 
-#### Part 2
-
-Proper on finish handling & sound & button disabled
-
-#### Part 3
-
-Add rest auto countdown & text & test finish & confetti & restart all
+We will also add a confetti effect when all Pomodoros are complete, signaling an achievement! For this, we will use [canvas-confetti](https://github.com/catdad/canvas-confetti) to help us with the effect.
