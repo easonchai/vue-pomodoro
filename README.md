@@ -16,12 +16,18 @@ yarn serve
 
 #### Part 1
 
-Basic setup and timer & animation
+In Part 1, we will go through the initial setup & get the timer & animation working for our Pomodoro app.
 
 #### Part 2
 
-Proper on finish handling & sound & button disabled
+For Part 2, we will implement functions that will run when the timer hits zero. We will also add sound effects & improvements to help with the user experience.
 
 #### Part 3
 
-Add rest auto countdown & text & test finish & confetti & restart all
+During Part 3, we will develop the rest countdown feature with additional styling improvements.
+We will also add additional flair when all Pomodoros are completed and restart fresh for a new session.
+
+#### Future Improvements
+
+[] Settings to allow users to customize Pomodoro sessions
+[] Task lists & UX improvements to create a more 'motivational feel'
