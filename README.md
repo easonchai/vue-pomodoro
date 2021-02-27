@@ -1,41 +1,21 @@
 # vue-pomodoro
 
-## Project setup
+🍅 Pomodoro Timer built using Vue 2. ✌️
+
+## Project setup 🏗️
 
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for development 🚧
 
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+## Part 2 ⏰
 
-```
-yarn build
-```
+In Part 2, we will add our sound effects and implement part of the rest feature timer.
 
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-#### Part 1
-
-Basic setup and timer & animation
-
-#### Part 2
-
-Proper on finish handling & sound & button disabled
-
-#### Part 3
-
-Add rest auto countdown & text & test finish & maybe add confetti? & restart all
+We will start by fixing the issues from Part 1, namely the incorrect animation timing when the timer is paused. We will also add some improvements to help with the user experience.
