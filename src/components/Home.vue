@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="title">
-      <h1>Pomodoro &#127813;</h1>
+    <div id="title">
+      <h1>Pomodoro</h1>
+      <img src="../assets/tomato.png" alt="tomato" width="64px" height="64px" />
     </div>
     <div class="timer">
       <svg
@@ -90,7 +91,7 @@
       </svg>
       <h2>{{ timeDisplay }}</h2>
     </div>
-    <button @click="handleTimer">{{ buttonText }}</button>
+    <button @click="handleButtonClick">{{ buttonText }}</button>
   </div>
 </template>
 
@@ -99,12 +100,10 @@ import ProgressBar from "progressbar.js";
 
 export default {
   name: "Home",
-  data: () => {
-    const pomodoroDuration = 1 * 60 * 1000; // 25 mins to millisecs
-
+  data: function() {
+    const pomodoroDuration = 0.1 * 60;
     return {
-      currentTimeInSeconds: pomodoroDuration / 1000,
-      restDuration: 5,
+      currentTimeInSeconds: pomodoroDuration,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
@@ -113,9 +112,9 @@ export default {
       topLeft: null,
       pathOptions: {
         easing: "linear",
-        duration: pomodoroDuration,
+        duration: pomodoroDuration * 1000,
       },
-      timeout: null,
+      interval: null,
     };
   },
   mounted: function() {
@@ -132,18 +131,16 @@ export default {
     this.topLeft.set(1);
   },
   methods: {
-    handleTimer() {
+    handleButtonClick() {
       if (this.buttonText === "Start!" || this.buttonText === "Resume") {
         this.buttonText = "Pause";
+        this.animateBar();
       } else if (this.buttonText === "Pause") {
         this.buttonText = "Resume";
-      } else {
-        this.buttonText = "Start!";
       }
-      this.animateBar();
     },
     animateBar() {
-      this.timeout = setInterval(() => {
+      this.interval = setInterval(() => {
         this.currentTimeInSeconds -= 1;
       }, 1000);
       switch (this.currentSegment) {
@@ -162,21 +159,15 @@ export default {
       }
     },
     onFinish() {
-      console.log("Finish");
-      if (this.currentSegment < 4) {
-        this.currentSegment += 1;
-      } else {
-        this.currentSegment = 1;
-      }
+      clearInterval(this.interval);
     },
   },
   computed: {
     timeDisplay() {
-      const minutes = String(parseInt(this.currentTimeInSeconds / 60));
-      const seconds = String(this.currentTimeInSeconds % 60);
+      const minutes = parseInt(this.currentTimeInSeconds / 60);
+      const seconds = this.currentTimeInSeconds % 60;
       const paddedMinutes = ("0" + minutes).slice(-2);
       const paddedSeconds = ("0" + seconds).slice(-2);
-
       return `${paddedMinutes}:${paddedSeconds}`;
     },
   },
@@ -191,58 +182,61 @@ export default {
   align-items: center;
 }
 
-.title {
+#title {
   margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 h1 {
-  color: #c44747;
   font-size: 64px;
+  color: #c44747;
+  margin-right: 10px;
 }
 
 .timer {
-  margin-top: 150px;
+  position: relative;
+  margin-top: 100px;
   width: 330px;
   height: 330px;
-  position: relative;
 }
 
 #first-segment {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
 }
 
 #second-segment {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
 }
 
 #third-segment {
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
 }
 
 #fourth-segment {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
 }
 
 h2 {
   position: absolute;
-  font-size: 64px;
-  color: #f85959;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
+  font-size: 64px;
+  color: #f85959;
 }
 
 button {
-  margin-top: 90px;
+  margin-top: 50px;
   width: 200px;
   height: 68px;
   background: #f85959;
