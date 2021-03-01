@@ -35,6 +35,6 @@ We will also add additional flair when all Pomodoros are completed and restart f
 - [ ] Task lists & UX improvements to create a more 'motivational feel'
 
 ### Video Links 📸
-[Part 1](https://youtu.be/61nRQynJI20)
-Part 2 (In progress)
-Part 3 (In progress)
+[Part 1](https://youtu.be/61nRQynJI20) <br/>
+Part 2 (In progress) <br/>
+Part 3 (In progress) <br/>
