@@ -33,3 +33,8 @@ We will also add additional flair when all Pomodoros are completed and restart f
 
 - [ ] Settings to allow users to customize Pomodoro sessions
 - [ ] Task lists & UX improvements to create a more 'motivational feel'
+
+### Video Links 📸
+[Part 1](https://youtu.be/61nRQynJI20)
+Part 2 (In progress)
+Part 3 (In progress)
