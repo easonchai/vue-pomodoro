@@ -14,7 +14,7 @@ yarn install
 yarn serve
 ```
 
-## Part 2 ⏰
+## Part 2 🔔
 
 In Part 2, we will add our sound effects, implement part of the rest feature timer, and start working on the pause & resume function!
 
