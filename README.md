@@ -36,5 +36,5 @@ We will also add additional flair when all Pomodoros are completed and restart f
 
 ### Video Links 📸
 [Part 1](https://youtu.be/61nRQynJI20) <br/>
-Part 2 (In progress) <br/>
+[Part 2](https://youtu.be/Kp6qajvTgS4) <br/>
 Part 3 (In progress) <br/>
