@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="title">
-      <h1>Pomodoro &#127813;</h1>
+    <div id="title">
+      <h1>Pomodoro</h1>
+      <img src="../assets/tomato.png" alt="tomato" width="64px" height="64px" />
     </div>
     <div class="timer">
       <svg
@@ -88,9 +89,12 @@
           d="M160.17,0A172,172,0,0,0,0,161.51"
         />
       </svg>
-      <h2>{{ timeDisplay }}</h2>
+      <div class="time-display">
+        <p v-if="resting">Rest</p>
+        <h2>{{ timeDisplay }}</h2>
+      </div>
     </div>
-    <button @click="handleTimer">{{ buttonText }}</button>
+    <button @click="handleButtonClick">{{ buttonText }}</button>
   </div>
 </template>
 
@@ -98,23 +102,14 @@
 import ProgressBar from "progressbar.js";
 import beep from "../assets/beep.mp3";
 
-//TODO:
-// Add on finish function
-// Fix pause issue
-// Rest
-// Next segment
-// Restart all
-// Confetti on finish all?
-
 export default {
   name: "Home",
-  data: () => {
-    const pomodoroDuration = 0.2 * 60; // 25 mins to secs
-
+  data: function() {
+    const pomodoroDuration = 0.1 * 60;
     return {
-      pomodoroDuration,
+      pomodoroDuration: pomodoroDuration,
+      restDuration: 0.05 * 60,
       currentTimeInSeconds: pomodoroDuration,
-      restDuration: 5 * 60,
       currentSegment: 1,
       buttonText: "Start!",
       topRight: null,
@@ -123,10 +118,11 @@ export default {
       topLeft: null,
       pathOptions: {
         easing: "linear",
-        duration: (pomodoroDuration + 0.2) * 1000, // add a fraction of a sec and convert to millis
+        duration: (pomodoroDuration + 0.5) * 1000,
       },
       interval: null,
       beepAudio: new Audio(beep),
+      resting: false,
     };
   },
   mounted: function() {
@@ -143,45 +139,33 @@ export default {
     this.topLeft.set(1);
   },
   methods: {
-    handleTimer() {
+    handleButtonClick() {
       if (this.buttonText === "Start!" || this.buttonText === "Resume") {
-        this.animateBar();
         this.buttonText = "Pause";
+        this.animateBar();
       } else if (this.buttonText === "Pause") {
         this.pauseBar();
         this.buttonText = "Resume";
-      } else {
-        this.buttonText = "Start!";
       }
     },
     animateBar() {
       this.interval = setInterval(() => {
-        if (this.currentTimeInSeconds > 0) {
-          this.currentTimeInSeconds -= 1;
-        }
+        this.currentTimeInSeconds -= 1;
       }, 1000);
-      let segment = null;
       switch (this.currentSegment) {
         case 1:
-          segment = this.topRight;
+          this.topRight.animate(0, this.onFinish);
           break;
         case 2:
-          segment = this.bottomRight;
+          this.bottomRight.animate(0, this.onFinish);
           break;
         case 3:
-          segment = this.bottomLeft;
+          this.bottomLeft.animate(0, this.onFinish);
           break;
         case 4:
-          segment = this.topLeft;
+          this.topLeft.animate(0, this.onFinish);
           break;
       }
-      segment.animate(
-        0,
-        {
-          duration: this.currentTimeInSeconds * 1000,
-        },
-        this.onFinish
-      );
     },
     pauseBar() {
       clearInterval(this.interval);
@@ -202,17 +186,17 @@ export default {
     },
     onFinish() {
       if (this.currentTimeInSeconds <= 0) {
-        // When finish, we want it to beep for a few seconds then only start rest timer
+        clearInterval(this.interval);
+
         if (this.currentSegment < 4) {
           this.currentSegment += 1;
         } else {
           this.currentSegment = 1;
         }
-        // Clear interval
-        clearInterval(this.interval);
 
-        // Play audio
         this.beepAudio.play();
+
+        this.resting = true;
 
         setTimeout(() => {
           this.buttonText = "Start!";
@@ -223,11 +207,10 @@ export default {
   },
   computed: {
     timeDisplay() {
-      const minutes = String(parseInt(this.currentTimeInSeconds / 60));
-      const seconds = String(this.currentTimeInSeconds % 60);
+      const minutes = parseInt(this.currentTimeInSeconds / 60);
+      const seconds = this.currentTimeInSeconds % 60;
       const paddedMinutes = ("0" + minutes).slice(-2);
       const paddedSeconds = ("0" + seconds).slice(-2);
-
       return `${paddedMinutes}:${paddedSeconds}`;
     },
   },
@@ -242,58 +225,52 @@ export default {
   align-items: center;
 }
 
-.title {
+#title {
   margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 h1 {
-  color: #c44747;
   font-size: 64px;
+  color: #c44747;
+  margin-right: 10px;
 }
 
 .timer {
-  margin-top: 150px;
+  position: relative;
+  margin-top: 100px;
   width: 330px;
   height: 330px;
-  position: relative;
 }
 
 #first-segment {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
 }
 
 #second-segment {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  bottom: 0;
+  right: 0;
 }
 
 #third-segment {
   position: absolute;
-  bottom: 0px;
-  left: 0px;
+  bottom: 0;
+  left: 0;
 }
 
 #fourth-segment {
   position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
-h2 {
-  position: absolute;
-  font-size: 64px;
-  color: #f85959;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  top: 0;
+  left: 0;
 }
 
 button {
-  margin-top: 90px;
+  margin-top: 50px;
   width: 200px;
   height: 68px;
   background: #f85959;
@@ -309,5 +286,28 @@ button {
 
 button:focus {
   outline: none;
+}
+
+.time-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 64px;
+  color: #f85959;
+}
+
+p {
+  font-size: 48px;
+  line-height: 48px;
+  text-align: center;
+  color: #ff8080;
 }
 </style>
